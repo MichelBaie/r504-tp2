@@ -5,5 +5,15 @@ FizzBuzz - Étape A (TDD)
 """
 
 def affiche():
-    # Squelette initial pour faire tourner les tests (échouer sur l'assert, pas sur l'import)
-    pass
+    out = []
+    for i in range(1, 101):
+        if i % 15 == 0:
+            out.append("FrisBee")
+        elif i % 3 == 0:
+            out.append("Fizz")
+        elif i % 5 == 0:
+            out.append("Buzz")
+        else:
+            out.append(str(i))
+    # On imprime (comportement demandé), sans retourner de valeur
+    print("".join(out))
