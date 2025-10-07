@@ -1,5 +1,8 @@
 """
-FizzBuzz - Étape A (TDD)
+FizzBuzz - Étapes A & B (TDD)
+- Étape A: affiche() IMPRIME 1..100 avec remplacements:
+  3 -> "Fizz", 5 -> "Buzz", 15 -> "FrisBee".
+- Étape B: affiche(n) RETOURNE la chaîne 1..n (mêmes règles).
 """
 
 def _token(i: int) -> str:
@@ -11,5 +14,20 @@ def _token(i: int) -> str:
         return "Buzz"
     return str(i)
 
-def affiche():
-    print("".join(_token(i) for i in range(1, 101)))
+def _build_range(from_inclusive: int, to_inclusive: int) -> str:
+    return "".join(_token(i) for i in range(from_inclusive, to_inclusive + 1))
+
+def affiche(n: int | None = None):
+    """
+    - Sans argument: imprime 1..100 (retourne None).
+    - Avec n: retourne la chaîne 1..n (ne rien imprimer).
+    """
+    if n is None:
+        print(_build_range(1, 100))
+        return None
+    if not isinstance(n, int):
+        raise TypeError("n doit être un entier (int).")
+    if n < 1:
+        # L'énoncé ne précise pas le cas n < 1; ici on renvoie une chaîne vide.
+        return ""
+    return _build_range(1, n)
