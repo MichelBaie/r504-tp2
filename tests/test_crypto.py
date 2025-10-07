@@ -1,0 +1,34 @@
+import unittest
+from tp2.crypto import crypt
+
+class TestCryptoStepA(unittest.TestCase):
+    def test_letters_simple_shift(self):
+        # Lettres minuscules dans ascii_letters
+        self.assertEqual(crypt("abc"), "bcd")
+
+    def test_lower_to_upper_transition(self):
+        # Dans ascii_letters, après 'z' vient 'A'
+        self.assertEqual(crypt("z"), "A")
+
+    def test_upper_to_punctuation_transition(self):
+        # Après 'Z' (fin de ascii_letters) vient '!' (début de ascii_punctuation)
+        self.assertEqual(crypt("Z"), "!")
+
+    def test_punctuation_to_digits_transition(self):
+        # '~' est le dernier de ascii_punctuation -> '0' (début de ascii_digits)
+        self.assertEqual(crypt("~"), "0")
+
+    def test_digit_to_space_transition(self):
+        # '9' (fin de ascii_digits) -> ' ' (espace)
+        self.assertEqual(crypt("9"), " ")
+
+    def test_space_wraps_to_a(self):
+        # Espace (dernier du jeu) -> 'a' (début de ascii_letters)
+        self.assertEqual(crypt(" "), "a")
+
+    def test_mixed_sequence(self):
+        # a -> b, Z -> !, 9 -> ' ', ' ' -> a
+        self.assertEqual(crypt("aZ9 "), "b! a")
+
+    def test_empty_returns_empty(self):
+        self.assertEqual(crypt(""), "")
