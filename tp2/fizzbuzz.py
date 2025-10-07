@@ -1,19 +1,15 @@
 """
 FizzBuzz - Étape A (TDD)
-- affiche() doit IMPRIMER la concaténation de 1 à 100 avec:
-  3 -> "Fizz", 5 -> "Buzz", 15 -> "FrisBee".
 """
 
+def _token(i: int) -> str:
+    if i % 15 == 0:
+        return "FrisBee"
+    if i % 3 == 0:
+        return "Fizz"
+    if i % 5 == 0:
+        return "Buzz"
+    return str(i)
+
 def affiche():
-    out = []
-    for i in range(1, 101):
-        if i % 15 == 0:
-            out.append("FrisBee")
-        elif i % 3 == 0:
-            out.append("Fizz")
-        elif i % 5 == 0:
-            out.append("Buzz")
-        else:
-            out.append(str(i))
-    # On imprime (comportement demandé), sans retourner de valeur
-    print("".join(out))
+    print("".join(_token(i) for i in range(1, 101)))
