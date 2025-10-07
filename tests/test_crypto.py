@@ -1,5 +1,5 @@
 import unittest
-from tp2.crypto import crypt
+from tp2.crypto import crypt, decrypt
 
 class TestCryptoStepA(unittest.TestCase):
     def test_letters_simple_shift(self):
@@ -60,3 +60,28 @@ class TestCryptoStepB(unittest.TestCase):
     def test_mixed_sequence_with_step(self):
         # Avec pas=2 : 'a'->'c', 'Z'->'"', '9'->'a', ' '->'b', puis suffixe '2'
         self.assertEqual(crypt("aZ9 ", 2), "c\"ab2")
+
+
+class TestCryptoStepC(unittest.TestCase):
+    def test_decrypt_inverts_crypt_simple(self):
+        cipher = crypt("Bonjour!", 3)  # ajoute '3' en suffixe
+        self.assertEqual(decrypt(cipher), "Bonjour!")
+
+    def test_decrypt_inverts_mixed_sequence(self):
+        cipher = crypt("aZ9 ", 2)      # "c\"ab2"
+        self.assertEqual(decrypt(cipher), "aZ9 ")
+
+    def test_decrypt_empty_plain_message(self):
+        # crypt("", 5) -> "5"; decrypt("5") -> ""
+        self.assertEqual(decrypt("5"), "")
+
+    def test_decrypt_missing_or_invalid_suffix_raises(self):
+        # Pas de suffixe (pas manquant)
+        with self.assertRaises(ValueError):
+            decrypt("bcd")  # provient de crypt("abc") sans pas explicite
+        # Suffixe '0' invalide (doit être 1..9)
+        with self.assertRaises(ValueError):
+            decrypt("ab0")
+        # Dernier caractère non numérique
+        with self.assertRaises(ValueError):
+            decrypt("abx")
