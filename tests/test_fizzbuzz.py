@@ -1,6 +1,11 @@
+import io
 import unittest
+from contextlib import redirect_stdout
 
-# Étape B: on s'attend à une fonction affiche(n) qui RETOURNE la chaîne 1..n
+# Étapes B & C:
+# - Étape B: affiche(n) RETOURNE la chaîne 1..n.
+# - Étape C: affiche(n1, n2) IMPRIME la chaîne n1..n2 (stdout).
+
 from tp2.fizzbuzz import affiche
 
 class TestFizzBuzzStepB(unittest.TestCase):
@@ -20,3 +25,22 @@ class TestFizzBuzzStepB(unittest.TestCase):
             out.endswith(expected_suffix_97_to_100),
             f"Suffixe incorrect.\nGot:      {out[-len(expected_suffix_97_to_100):]}\nExpected: {expected_suffix_97_to_100}",
         )
+
+class TestFizzBuzzStepC(unittest.TestCase):
+    def test_affiche_range_5_10_prints(self):
+        expected_5_to_10 = "BuzzFizz78FizzBuzz"
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            ret = affiche(5, 10)
+        out = buf.getvalue().strip()
+        self.assertEqual(out, expected_5_to_10)
+        self.assertIsNone(ret)  # on IMPRIME, on ne retourne rien
+
+    def test_affiche_range_10_16_prints(self):
+        expected_10_to_16 = "Buzz11Fizz1314FrisBee16"
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            ret = affiche(10, 16)
+        out = buf.getvalue().strip()
+        self.assertEqual(out, expected_10_to_16)
+        self.assertIsNone(ret)
