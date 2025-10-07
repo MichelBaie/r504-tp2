@@ -1,0 +1,18 @@
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+# Règles de base + import order + modernisations Python
+select = ["E", "F", "W", "I", "UP"]
+ignore = [
+  # Ajoutez ici des codes à ignorer si besoin
+]
+
+[tool.ruff.format]
+# Laisser Ruff format off; on utilise Black pour le formatage
+quote-style = "preserve"
